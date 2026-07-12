@@ -1,0 +1,750 @@
+/* ==========================================================================
+   Amy Nail Spa & Centro Estetico — Via Melzo 24, Milano
+   Brand reale dalle insegne: oro e bordeaux su crema, corona e monogramma.
+   Hero con la foto vera della vetrina notturna.
+   ========================================================================== */
+
+:root {
+  --crema: #FBF7F2;
+  --crema-scura: #F2EBE1;
+  --notte: #201318;
+  --notte-fonda: #150F12;
+  --inchiostro: #2B2126;
+  --grigio: #5D5257;
+  --oro: #B98A44;
+  --oro-chiaro: #D9B87A;
+  --oro-testo: #241812;
+  --bordeaux: #8E3B45;
+  --linea: rgba(43, 33, 38, .15);
+  --font-display: "Marcellus", "Times New Roman", serif;
+  --font-testo: "Mulish", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---------- reset ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-testo);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--inchiostro);
+  background: var(--crema);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3, p, ul { margin: 0; }
+ul { padding: 0; list-style: none; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--bordeaux);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.hero :focus-visible,
+.sezione-scura :focus-visible,
+.footer :focus-visible {
+  outline-color: var(--oro-chiaro);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px; left: 1rem;
+  z-index: 2000;
+  padding: .6rem 1rem;
+  background: var(--inchiostro);
+  color: var(--crema);
+  border-radius: 4px;
+  text-decoration: none;
+}
+.skip-link:focus { top: .5rem; }
+
+.mono {
+  font-family: var(--font-testo);
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* ---------- bottoni ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35em;
+  padding: .85rem 1.7rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-family: var(--font-testo);
+  font-weight: 700;
+  font-size: .95rem;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-small { padding: .5rem 1.15rem; font-size: .85rem; }
+
+.btn-oro { background: var(--oro); color: var(--oro-testo); }
+.btn-oro:hover { background: var(--oro-chiaro); }
+
+.btn-notte { background: var(--notte); color: var(--crema); }
+.btn-notte:hover { background: var(--bordeaux); }
+
+.btn-velo {
+  background: rgba(255, 255, 255, .12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, .55);
+}
+.btn-velo:hover { border-color: #fff; background: rgba(255, 255, 255, .2); }
+
+.btn-quieto {
+  background: transparent;
+  color: var(--inchiostro);
+  border-color: rgba(43, 33, 38, .35);
+}
+.btn-quieto:hover { border-color: var(--inchiostro); }
+
+/* ---------- intro "l'insegna si accende" ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--notte-fonda);
+  transition: opacity .6s ease;
+}
+.intro--via { opacity: 0; }
+
+.intro-insegna { text-align: center; }
+
+.intro-corona {
+  width: 52px;
+  height: auto;
+  margin: 0 auto .8rem;
+}
+.intro-corona path,
+.intro-corona line {
+  stroke: var(--oro);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 130;
+  stroke-dashoffset: 130;
+  animation: traccia .8s ease-out .2s forwards;
+}
+.intro-corona line { stroke-dasharray: 34; stroke-dashoffset: 34; animation-delay: .8s; animation-duration: .3s; }
+
+.intro-nome {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 8vw, 4rem);
+  letter-spacing: .06em;
+  color: #F4E3C2;
+  opacity: 0;
+  animation: accendi 1.1s ease-out .6s forwards;
+}
+
+.intro-riga {
+  margin-top: .7rem;
+  font-weight: 700;
+  font-size: .68rem;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+  opacity: 0;
+  animation: appare .5s ease-out 1.5s forwards;
+}
+
+@keyframes traccia { to { stroke-dashoffset: 0; } }
+@keyframes appare { to { opacity: .9; } }
+@keyframes accendi {
+  0%   { opacity: 0; text-shadow: none; }
+  35%  { opacity: .9; text-shadow: 0 0 26px rgba(217, 184, 122, .7); }
+  45%  { opacity: .25; text-shadow: none; }
+  55%  { opacity: 1; text-shadow: 0 0 30px rgba(217, 184, 122, .8); }
+  62%  { opacity: .5; text-shadow: none; }
+  100% { opacity: 1; text-shadow: 0 0 22px rgba(217, 184, 122, .55); }
+}
+
+.intro-lock { overflow: hidden; }
+
+/* ---------- topbar ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .65rem clamp(1rem, 3vw, 1.6rem);
+  background: rgba(251, 247, 242, .93);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--linea);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: .03em;
+  text-decoration: none;
+  color: var(--inchiostro);
+  white-space: nowrap;
+}
+
+.nav { margin-left: auto; }
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  gap: .5rem;
+  padding: .45rem .9rem;
+  background: transparent;
+  border: 1px solid rgba(43, 33, 38, .35);
+  border-radius: 999px;
+  font-family: var(--font-testo);
+  font-weight: 700;
+  font-size: .85rem;
+  color: var(--inchiostro);
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  width: 16px;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 5px 0 currentColor, 0 -5px 0 currentColor;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: clamp(.9rem, 2vw, 1.5rem);
+}
+
+.nav-menu a {
+  font-size: .92rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--inchiostro);
+  padding: .3rem 0;
+  border-bottom: 2px solid transparent;
+}
+.nav-menu a:hover { border-bottom-color: var(--oro); }
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  font-size: .82rem;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  padding: .25rem .3rem;
+  font-family: var(--font-testo);
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--grigio);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.lang-btn.is-active {
+  color: var(--inchiostro);
+  border-bottom-color: var(--bordeaux);
+}
+.lang-sep { color: rgba(43, 33, 38, .4); }
+
+@media (max-width: 920px) {
+  .nav-toggle { display: inline-flex; }
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0; right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: .6rem 1.2rem 1rem;
+    background: var(--crema);
+    border-bottom: 1px solid var(--linea);
+    box-shadow: 0 14px 28px rgba(43, 33, 38, .12);
+  }
+  .nav.is-open .nav-menu { display: flex; }
+  .nav-menu a {
+    padding: .7rem .2rem;
+    border-bottom: 1px solid rgba(43, 33, 38, .08);
+  }
+  .nav-menu li:last-child a { border-bottom-color: transparent; }
+}
+
+@media (max-width: 560px) {
+  .wordmark { font-size: 1.05rem; }
+  .topbar { gap: .6rem; }
+}
+
+/* ---------- hero con foto ---------- */
+
+.hero {
+  position: relative;
+  min-height: 88vh;
+  min-height: 88svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--notte);
+}
+
+.hero-sfondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 30%;
+}
+
+.hero-velo {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(21, 15, 18, .92) 0%, rgba(21, 15, 18, .35) 55%, rgba(21, 15, 18, .3) 100%),
+    linear-gradient(to right, rgba(21, 15, 18, .72) 0%, rgba(21, 15, 18, .25) 60%, rgba(21, 15, 18, .1) 100%);
+}
+
+.hero-contenuto {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(7rem, 16vh, 10rem) 1.5rem clamp(3rem, 7vh, 4.5rem);
+  color: #fff;
+}
+
+.eyebrow {
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+}
+
+.hero-nome {
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.9rem, 9vw, 5.4rem);
+  line-height: 1.02;
+  letter-spacing: .015em;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(21, 15, 18, .45);
+}
+
+.hero-sub {
+  margin-top: .4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+}
+
+.hero-claim {
+  margin-top: 1.6rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  color: #F4E3C2;
+}
+
+.hero-lead {
+  max-width: 54ch;
+  margin-top: .7rem;
+  font-size: 1.02rem;
+  color: rgba(255, 255, 255, .88);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .9rem;
+  margin-top: 1.8rem;
+}
+
+.hero-badge {
+  margin-top: 1.6rem;
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+}
+
+/* ---------- i punti ---------- */
+
+.punti-fascia {
+  padding: clamp(3rem, 6vw, 4.5rem) 1.5rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.punti {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.punto h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin-bottom: .5rem;
+}
+
+.punto h2::before {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: 2px;
+  margin-bottom: .9rem;
+  background: var(--oro);
+}
+
+.punto p {
+  font-size: .95rem;
+  color: var(--grigio);
+}
+
+@media (max-width: 800px) {
+  .punti { grid-template-columns: 1fr; max-width: 480px; gap: 1.6rem; }
+}
+
+/* ---------- sezioni ---------- */
+
+.sezione {
+  padding: clamp(3.5rem, 8vw, 5.5rem) 1.5rem;
+}
+
+.sezione-titolo {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.12;
+  text-align: center;
+}
+
+.sezione-sub {
+  margin-top: .5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--bordeaux);
+}
+
+.sezione-sub-chiara { color: var(--oro-chiaro); }
+
+/* ---------- i servizi (listino) ---------- */
+
+.listino-colonne {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.4rem clamp(2.5rem, 6vw, 5rem);
+  max-width: 940px;
+  margin: 2.8rem auto 0;
+}
+
+.cat-nome {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.25rem;
+  letter-spacing: .05em;
+  color: var(--bordeaux);
+  margin-bottom: .9rem;
+  padding-bottom: .4rem;
+  border-bottom: 2px solid var(--oro);
+}
+
+.cat-nome-dopo { margin-top: 2.2rem; }
+
+.voci { display: grid; gap: .65rem; }
+
+.voce {
+  display: flex;
+  align-items: baseline;
+  gap: .5em;
+  font-size: .98rem;
+}
+
+.voce-punti {
+  flex: 1;
+  min-width: 1.5em;
+  border-bottom: 1px dotted rgba(43, 33, 38, .3);
+  transform: translateY(-4px);
+}
+
+.voce-prezzo {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.voce-prezzo span { font-weight: 400; color: var(--grigio); }
+
+.cat-testo {
+  font-size: .95rem;
+  color: var(--grigio);
+}
+
+.listino-nota {
+  margin-top: 2.6rem;
+  text-align: center;
+  color: var(--grigio);
+}
+
+.listino-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.6rem;
+}
+
+@media (max-width: 760px) {
+  .listino-colonne { grid-template-columns: 1fr; }
+}
+
+/* ---------- la cura ---------- */
+
+.sezione-scura {
+  background: var(--notte);
+  color: var(--crema);
+}
+
+.sezione-scura .sezione-titolo { color: var(--crema); }
+
+.cura-punti {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.2rem;
+  max-width: 1000px;
+  margin: 2.8rem auto 0;
+}
+
+.cura-icona {
+  width: 44px;
+  height: 44px;
+  stroke: var(--oro-chiaro);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  margin-bottom: 1rem;
+}
+
+.cura-punto h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin-bottom: .5rem;
+  color: #F4E3C2;
+}
+
+.cura-punto p {
+  font-size: .95rem;
+  color: rgba(251, 247, 242, .8);
+}
+
+@media (max-width: 800px) {
+  .cura-punti { grid-template-columns: 1fr; max-width: 480px; gap: 1.8rem; }
+}
+
+/* ---------- orari e dove ---------- */
+
+.orari-dove {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 3.5rem);
+  max-width: 900px;
+  margin: 2.8rem auto 0;
+  align-items: start;
+}
+
+.orari-tabella {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .98rem;
+}
+
+.orari-tabella th,
+.orari-tabella td {
+  padding: .6rem .2rem;
+  border-bottom: 1px solid var(--linea);
+  text-align: left;
+  font-weight: 400;
+}
+
+.orari-tabella td { text-align: right; font-variant-numeric: tabular-nums; }
+
+.dove-indirizzo {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+
+.dove-metro {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: .9rem;
+  font-size: .92rem;
+  color: var(--grigio);
+}
+
+.metro-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #E0492F;
+  flex: none;
+}
+
+.dove-azioni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .8rem;
+  margin-top: 1.6rem;
+}
+
+.dove-note {
+  margin-top: 1.4rem;
+  font-size: .88rem;
+  color: var(--grigio);
+}
+
+@media (max-width: 760px) {
+  .orari-dove { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+/* ---------- footer ---------- */
+
+.footer {
+  position: relative;
+  padding: 3.5rem 1.5rem 2.5rem;
+  background: var(--notte-fonda);
+  color: var(--crema);
+  overflow: hidden;
+}
+
+.footer-wordmark {
+  position: absolute;
+  top: -2.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 12rem);
+  letter-spacing: .04em;
+  white-space: nowrap;
+  color: rgba(217, 184, 122, .07);
+  pointer-events: none;
+  user-select: none;
+}
+
+.footer-cols {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-cols h3 {
+  font-weight: 700;
+  font-size: .72rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+  margin-bottom: .7rem;
+}
+
+.footer-cols p {
+  font-size: .95rem;
+  color: rgba(251, 247, 242, .88);
+  margin-bottom: .3rem;
+}
+
+.footer-cols a {
+  color: var(--crema);
+  text-decoration-color: rgba(251, 247, 242, .4);
+  text-underline-offset: 3px;
+}
+.footer-cols a:hover { text-decoration-color: var(--crema); }
+
+.footer-legal {
+  position: relative;
+  max-width: 900px;
+  margin: 2.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(251, 247, 242, .16);
+  font-size: .8rem;
+  color: rgba(251, 247, 242, .6);
+}
+
+@media (max-width: 760px) {
+  .footer-cols { grid-template-columns: 1fr; gap: 1.6rem; }
+}
+
+/* ---------- reveal on scroll ---------- */
+/* Lo stato nascosto esiste solo se il JS è partito (classe .js sul root)
+   e solo se l'utente non preferisce il movimento ridotto. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn, .btn:hover { transform: none; transition: none; }
+  .intro { display: none; }
+}
